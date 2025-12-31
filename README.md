@@ -1,15 +1,84 @@
-Welcome to your new dbt project!
+````markdown
+# DBT Homework: Analytics Models
 
-### Using the starter project
+##  Описание проекта
 
-Try running the following commands:
-- dbt run
-- dbt test
+В рамках данного домашнего задания был реализован аналитический пайплайн с использованием **dbt (data build tool)**.  
+Проект демонстрирует базовый подход к построению аналитических моделей поверх сырых данных с применением слоёв `staging`, `intermediate` и `marts`.
 
+Цель работы — показать умение:
+- работать с dbt-проектом,
+- описывать модели и зависимости между ними,
+- строить витрины данных (marts),
+- применять best practices аналитического моделирования.
 
-### Resources:
-- Learn more about dbt [in the docs](https://docs.getdbt.com/docs/introduction)
-- Check out [Discourse](https://discourse.getdbt.com/) for commonly asked questions and answers
-- Join the [chat](https://community.getdbt.com/) on Slack for live discussions and support
-- Find [dbt events](https://events.getdbt.com) near you
-- Check out [the blog](https://blog.getdbt.com/) for the latest news on dbt's development and best practices
+---
+
+##  Структура проекта
+
+```text
+.
+├── models/
+│   ├── staging/        # Подготовка и очистка сырых данных
+│   ├── intermediate/   # Промежуточные трансформации
+│   └── marts/          # Финальные аналитические витрины
+│
+├── macros/             # Пользовательские макросы (если используются)
+├── dbt_project.yml     # Конфигурация dbt-проекта
+├── profiles.yml        # Профиль подключения к БД (локально)
+└── README.md
+````
+
+---
+
+## Реализованные модели
+
+В проекте реализованы следующие типы моделей:
+
+* **Staging models**
+
+  * Приведение схемы данных
+  * Переименование колонок
+  * Базовая очистка данных
+
+* **Intermediate models**
+
+  * Объединение и агрегации
+  * Подготовка данных для витрин
+
+* **Mart models**
+
+  * Аналитические витрины для дальнейшего анализа
+  * Метрики и агрегаты, готовые к использованию в BI / аналитике
+
+---
+
+## Используемые технологии
+
+* **dbt**
+* **SQL**
+* **PostgreSQL** (в качестве хранилища данных)
+* **Git / GitHub**
+
+---
+
+## Как запустить проект
+
+1. Установить зависимости:
+
+   ```bash
+   pip install dbt-postgres
+   ```
+
+2. Проверить подключение:
+
+   ```bash
+   dbt debug
+   ```
+
+3. Выполнить модели:
+
+   ```bash
+   dbt run
+   ```
+
