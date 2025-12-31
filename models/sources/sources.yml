@@ -1,0 +1,23 @@
+version: 2
+
+sources:
+  - name: transactions_db
+    description: "Raw transactions data from ClickHouse (DZ-4)"
+    database: transactions_db
+    schema: transactions_db
+    tables:
+      - name: transactions
+        description: "Transactions with fraud label"
+        columns:
+          - name: transaction_time
+            description: "Timestamp of transaction"
+          - name: us_state
+            description: "US state"
+          - name: cat_id
+            description: "Transaction category"
+          - name: amount
+            description: "Transaction amount"
+          - name: merch
+            description: "Merchant name"
+          - name: target
+            description: "Fraud flag (1 = fraud, 0 = legit)"

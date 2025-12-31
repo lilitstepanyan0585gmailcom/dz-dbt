@@ -1,0 +1,72 @@
+version: 2
+
+models:
+  - name: stg_transactions
+    description: "Staging слой: очистка и нормализация транзакций, приведение типов и вычисляемые поля."
+    columns:
+      - name: transaction_time
+        tests: [not_null]
+
+      - name: transaction_date
+        tests: [not_null]
+
+      - name: transaction_hour
+        tests: [not_null]
+
+      - name: dow
+        tests: [not_null]
+
+      - name: us_state
+        tests: [not_null]
+
+      - name: cat_id
+        tests: [not_null]
+
+      - name: amount
+        tests: [not_null]
+
+      - name: target
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - 0
+                  - 1
+
+  - name: mart_daily_state_metrics
+    description: "Дневные агрегированные метрики по штатам."
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns: [transaction_date, us_state]
+    columns:
+      - name: transaction_date
+        tests: [not_null]
+      - name: us_state
+        tests: [not_null]
+
+  - name: mart_fraud_by_category
+    description: "Анализ фрода по категориям."
+    columns:
+      - name: cat_id
+        tests: [not_null]
+      - name: fraud_rate_pct
+
+  - name: mart_fraud_by_state
+    description: "Географический анализ фрода по штатам."
+    columns:
+      - name: us_state
+        tests: [not_null]
+      - name: fraud_rate_pct
+
+  - name: mart_hourly_fraud_pattern
+    description: "Временные паттерны фрода по дням недели и часам."
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns: [dow, transaction_hour]
+    columns:
+      - name: dow
+        tests: [not_null]
+      - name: transaction_hour
+        tests: [not_null]
+      - name: fraud_rate_pct
